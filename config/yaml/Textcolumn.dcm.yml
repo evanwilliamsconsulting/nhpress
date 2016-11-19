@@ -1,0 +1,76 @@
+Textcolumn:
+    type: entity
+    table: textcolumn
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        startline:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: startLine
+        endline:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: endLine
+        fontsize:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: fontSize
+        useremainder:
+            type: boolean
+            nullable: false
+            column: useRemainder
+        usecontinuedon:
+            type: boolean
+            nullable: false
+            column: useContinuedOn
+        usecontinuedfrom:
+            type: boolean
+            nullable: false
+            column: useContinuedFrom
+        continuedon:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: continuedOn
+        continuedfrom:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: continuedFrom
+        charsperline:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: charsPerLine
+        textclass:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        wordage:
+            type: object
+            nullable: false
+            length: null
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

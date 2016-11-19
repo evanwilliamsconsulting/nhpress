@@ -1,0 +1,27 @@
+Pixlink:
+    type: entity
+    table: pixlink
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        pixclass:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        pixreference:
+            type: object
+            nullable: false
+            length: null
+            options:
+                fixed: false
+            column: pixReference
+    lifecycleCallbacks: {  }

@@ -1,0 +1,47 @@
+Container:
+    type: entity
+    table: container
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: text
+            nullable: false
+            length: 50
+        original:
+            type: datetime
+            nullable: false
+        name:
+            type: string
+            nullable: false
+            length: 255
+        page:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        background:
+            type: string 
+            nullable: true 
+            length: 255 
+        frame:
+            type: boolean
+            nullable: true 
+        backgroundwidth:
+            type: integer
+            nullable: true 
+            options:
+                unsigned: false
+        backgroundheight:
+            type: integer
+            nullable: true 
+            options:
+                unsigned: false
+    lifecycleCallbacks: {  }
