@@ -67,4 +67,3 @@ class ContainerType
         return $this->containertype;
     }
 }
-

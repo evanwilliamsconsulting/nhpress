@@ -15,8 +15,8 @@ return array(
     'db' => array(
         'driver'         => 'PdoMysql',
         'dsn'            => 'mysql:dbname=publishing;host=45.79.146.152',
-        'username'       => 'ewilliams',
-        'password'       => 'happy2Bme!'
+        'username'       => 'root',
+        'password'       => 'ptH3984z'
     ),
     'service_manager' => array(
         'factories' => array(

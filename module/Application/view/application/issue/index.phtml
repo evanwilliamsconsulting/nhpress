@@ -1,4 +1,17 @@
-<div>
-	<h2>Content</h2>
-	<?php echo $this->customHelper(); ?> 
+<div id="content-inner">
+	<h1>ISSUES</h1>
+	<?php
+		foreach($this->issues as $key => $value)
+		{
+			?>
+			<div class="issue_row">
+			<?php
+			$dateOfIssue = $value->getDateOfPublication();
+			print $dateOfIssue;
+			?>
+			</div>
+			<br/>
+			<?php
+		}
+	?>
 </div>

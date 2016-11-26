@@ -11,75 +11,133 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Issue;
-use Hex\View\Helper\CustomHelper;
+
 use Doctrine\ORM\EntityManager;
-use Application\Form\Entity\IssueForm;
+use Application\Form\Entity\CorrespondantForm;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\InputFilterAwareInterface;
+
+use Zend\Stdlib\ArrayObject as ArrayObject;
+
+use Application\Model\Issues as Issues;
+use Application\Entity\Wordage as Wordage;
+use Application\View\Helper\WordageHelper as WordageHelper;
+use Application\Service\WordageService as WordageService;
+
+use Application\View\Helper\PictureHelper as PictureHelper;
+use Zend\Session\Container;
+
+use Application\View\Helper\UserToolbar as UserToolbar;
 
 class IssueController extends AbstractActionController
 {
-    protected $em;
- 
-    public function getEntityManager()
-    {
-        if (null == $this->em)
-        {
-            $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+	protected $em;
+	protected $authservice;
+	protected $username;
+	protected $log;
+	protected $obj;
+
+	public function __construct()
+	{
 	}
+	public function getEntityManager()
+	{
+		if (null == $this->em)
+		{
+		    try {
+			$this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+			//$this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+		    } catch (Exception $e) {
+			//print_r($e);
+			//print_r($e-getPrevious());
+		    }
+		}
 	return $this->em;
-    }
-    public function indexAction()
-    {
-	$view = new ViewModel();
+	}
+	public function indexAction()
+	{
+		$this->log = $this->getServiceLocator()->get('log');
+		$log = $this->log;
+		$log->info("Issue Controller");
+		$layout = $this->layout();
 
-	$articleView = new ViewModel(array('article' => $article));
-        $articleView->setTemplate('content/article');
+		$this->log->info('Issue Controller: index');
+		$userSession = new Container('user');
+		if (!isset($userSession->test))
+		{
+			$attempt = "notloggedin"; 
+			$username = "notloggedin";
+			$this->log->info("Not Logged In!");
+			return $this->redirect()->toRoute('/');
+		}
+		else
+		{
+			$attempt = $userSession->test;
+			$username = $userSession->username;
+			$this->log->info("Logged In! Username: " . $username);
+		}
+		$userToolbar = new UserToolbar();
+		$userToolbar->setUserName($username);
+		$this->layout()->layouttest = $userToolbar->showOutput($attempt);
 
-	$view->content = $this->content();
+		$log->info("Get Entity Manager");
+		
+		$em = $this->getEntityManager();
+		$log->info("Got Entity Manager");
+		
 
-        return $view;
-    }
-    public function content()
-    {
-	return "content";
-    }
-    public function viewAction()
-    {
-        $em = $this->getEntityManager();
-	$em->flush();
+	//	$new = $this->params()->fromQuery('new');
 
-	$view = new ViewModel();
-	$view->content = "Times Are Good Again!";
+	/*
+		if (!is_null($new))
+		{
+			if ($new == "wordage")
+			{
+				$log->info("wordage");
+				$todaysdate = date("d/m/Y",time());
+				$log->info($todaysdate);
+				$newWordage = new Wordage();
+				$newWordage->setOriginal($todaysdate);
+				$newWordage->setTitle("new");
+				$newWordage->setUsername("evanwill");
+				$newWordage->setWordage("new");
+				$newWordage->setColumnsize("65");
+				$log->info(print_r($newWordage,true));	
+				$em->persist($newWordage);
+				$em->flush();
 
-	return $view;
-    }
-    public function getForm()
-    {
-        $form = new IssueForm();
-        $form->get('submit')->setValue('Add');
+				return $this->redirect()->toRoute('correspondant');
+			}
+		}
+	*/
 
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $issue = new Issue();
-        }
-	return $form;
-    }
-    public function newAction()
-    {
-	$view = new ViewModel();
-	$form = $this->getForm();
-	$view->form = $form;
-	return $view;
-    }
-    public function contentsAction()
-    {
-	$view = new ViewModel();
+			// This second layout look really should happen if logged in.
+		$layout->setTemplate('layout/issue');
 
-	$articleView = new ViewModel(array('article' => $article));
-        $articleView->setTemplate('content/article');
 
-	$view->content = "contents";
+		$issues = new Issues();
+		$issues->setLog($log);
+		$issues->setEntityManager($em);
+		$issues->loadDataSource();
 
-        return $view;
-    }
+
+			$log->info(print_r($issues,true));
+			
+		$view = new ViewModel();
+		
+	$view->issues=$issues;
+	$issueArray = Array();
+
+	foreach ($issues->toArray() as $num => $item)
+	{
+		$issueObject = $item["object"];
+		$issueArray[] = $issueObject;
+	}
+	$view->issues = $issueArray;
+	//print_r($issueArray,true);
+	//$view->issues = $issues;
+
+        	return $view;
+    	}
 }

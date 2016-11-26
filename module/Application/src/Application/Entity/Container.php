@@ -250,4 +250,32 @@ class Container
     {
         return $this->backgroundheight;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Container
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set page
+     *
+     * @param int $page
+     *
+     * @return Container
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
 }

@@ -7,9 +7,6 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ContainerItem
- */
-/**
  * @ORM\Entity
  * @ORM\Table(name="containeritem")
  */
@@ -484,4 +481,3 @@ class ContainerItem
         return $this->offsety;
     }
 }
-

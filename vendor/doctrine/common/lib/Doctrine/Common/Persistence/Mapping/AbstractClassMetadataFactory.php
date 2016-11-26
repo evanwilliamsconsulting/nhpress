@@ -209,14 +209,11 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
         try {
             if ($this->cacheDriver) {
                 if (($cached = $this->cacheDriver->fetch($realClassName . $this->cacheSalt)) !== false) {
-		    //print($realClassName);
                     $this->loadedMetadata[$realClassName] = $cached;
 
                     $this->wakeupReflection($cached, $this->getReflectionService());
                 } else {
-		    //print($realClassName);
                     foreach ($this->loadMetadata($realClassName) as $loadedClassName) {
-			//print($loadedClassName);
                         $this->cacheDriver->save(
                             $loadedClassName . $this->cacheSalt,
                             $this->loadedMetadata[$loadedClassName],
@@ -281,10 +278,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
     {
         // Collect parent classes, ignoring transient (not-mapped) classes.
         $parentClasses = array();
-	//print($name);
-	//print_r($this->getReflectionService());
         foreach (array_reverse($this->getReflectionService()->getParentClasses($name)) as $parentClass) {
-	    //print_r($parentClass);
             if ( ! $this->getDriver()->isTransient($parentClass)) {
                 $parentClasses[] = $parentClass;
             }
@@ -314,7 +308,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
 
         $loaded = array();
 
-	//print($name);
         $parentClasses = $this->getParentClasses($name);
         $parentClasses[] = $name;
 
@@ -428,11 +421,9 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     public function getReflectionService()
     {
-	//print("GetReflectionService");
         if ($this->reflectionService === null) {
             $this->reflectionService = new RuntimeReflectionService();
         }
-	//print_r($this->reflectionService);
         return $this->reflectionService;
     }
 }

@@ -38,7 +38,7 @@ use Application\Service\ItemService as ItemService;
 use Zend\Db\Adapter;
 use Application\Entity\Correspondant;
 
-//require_once 'vendor/firephp/firephp-core/lib/FirePHPCore/FirePHP.class.php';
+require_once 'vendor/firephp/firephp-core/lib/FirePHPCore/FirePHP.class.php';
 
 class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface, ConfigProviderInterface
 {

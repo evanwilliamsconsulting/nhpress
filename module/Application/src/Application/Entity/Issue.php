@@ -1,56 +1,84 @@
 <?php
 
+namespace Application\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\Validator\Date;
+
 /**
- * Issue
+ * @ORM\Entity
+ * @ORM\Table(name="issue")
  */
 class Issue
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
+     *
+     * @ORM\Column(name="dateofpublication", type="string", length=255, nullable=false)
      */
     private $dateofpublication;
 
     /**
      * @var boolean
+     *
+     * @ORM\Column(name="toggledivtagson", type="boolean", nullable=false)
      */
     private $toggledivtagson;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="priceofcopy", type="string", length=255, nullable=false)
      */
     private $priceofcopy;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="tagline", type="string", length=255, nullable=false)
      */
     private $tagline;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="qrimage", type="string", length=255, nullable=false)
      */
     private $qrimage;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="headingtheme", type="string", length=255, nullable=false)
      */
     private $headingtheme;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="secondtheme", type="string", length=255, nullable=false)
      */
     private $secondtheme;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="brace", type="string", length=255, nullable=false)
      */
     private $brace;
 

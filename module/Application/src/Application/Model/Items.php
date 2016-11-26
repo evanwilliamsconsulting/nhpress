@@ -10,7 +10,6 @@ class Items extends AbstractResultSet
      private $itemArray;
      protected $em;
      protected $obj;
-     protected $log;
 
      public function __construct()
      {
@@ -27,7 +26,8 @@ class Items extends AbstractResultSet
 	public function loadDataSource()
 	{
 		$em = $this->getEntityManager();
-		$wordages = $em->getRepository('Application\Entity\Wordage')->findAll();
+		$repository = $em->getRepository('Application\Entity\Wordage');
+		$wordages = $repository->findAll();
 		foreach	($wordages as $wordage)
 		{
 			$newArray = Array();

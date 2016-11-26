@@ -58,27 +58,35 @@ class CorrespondantController extends AbstractActionController
     }
     public function indexAction()
     {
+	$this->log = $this->getServiceLocator()->get('log');
+        $log = $this->log;
+        $log->info("Correspondant Controller");
+
+		$this->log = $this->getServiceLocator()->get('log');
+		$this->log->info('Correspondant Controller: index');
    		$userSession = new Container('user');
 		if (!isset($userSession->test))
 		{
 			$attempt = "notloggedin"; 
 			$username = "notloggedin";
+			$this->log->info("Not Logged In!");
 			return $this->redirect()->toRoute('/');
 		}
 		else
 		{
 			$attempt = $userSession->test;
 			$username = $userSession->username;
+			$this->log->info("Logged In! Username: " . $username);
 		}
 		$userToolbar = new UserToolbar();
 		$userToolbar->setUserName($username);
 		$this->layout()->layouttest = $userToolbar->showOutput($attempt);
 
-	$this->log = $this->getServiceLocator()->get('log');
-        $log = $this->log;
-        $log->info("Correspondant Controller");
 
-        $em = $this->getEntityManager();
+	$log->info("Get Entity Manager");
+        
+	$em = $this->getEntityManager();
+	
 
 	$new = $this->params()->fromQuery('new');
 
@@ -106,6 +114,8 @@ class CorrespondantController extends AbstractActionController
 	$layout = $this->layout();
 	// This second layout look really should happen if logged in.
 	$layout->setTemplate('layout/correspondant');
+
+
 
 	$items = new Items();
 	$items->setEntityManager($em);
@@ -135,7 +145,6 @@ class CorrespondantController extends AbstractActionController
 			$wordageItem = new WordageHelper();
 			$wordageItem->setServiceLocator($this->getServiceLocator());
 			$wordageItem->setViewModel($view);
-			$wordageItem->setLog($log);
 			$wordageItem->setUsername($username);
 			$wordageItem->setEntityManager($this->getEntityManager());
 			$wordageItem->setWordageObject($item["object"]);
@@ -168,5 +177,6 @@ class CorrespondantController extends AbstractActionController
 	$view->items = $itemArray;
 
         return $view;
+
     }
 }
