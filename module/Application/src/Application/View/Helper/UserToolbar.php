@@ -67,29 +67,29 @@ class UserToolbar extends AbstractHelper
 	    $retval .= "<ul class='itemlist'>";
         if (0==strcmp($attempt,"notloggedin"))
         {
-	       $retval .= "<li class='itemtab'><a href='#' onClick='clickLogin();'>Login!</a></li>";
-	       $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
-	       $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
+	       $retval .= "<li class='itemtab_light'><a href='#' onClick='clickLogin();'>Login!</a></li>";
+	       $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
+	       $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
 	    }
         else
         {
-            $retval .= "<li class='itemtab'><a>";
+            $retval .= "<li class='itemtab_light'><a>";
             $retval .= $this->username;
             $retval .= "</a></li>";
-            $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
-            $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
-            $retval .= "<li class='itemtab'><a href='#' onClick='clickLogout();'>Logout!</a></li>";
-            $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
-            $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
+            $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
+            $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
+            $retval .= "<li class='itemtab_light'><a href='#' onClick='clickLogout();'>Logout!</a></li>";
+            $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
+            $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
 	    }
         // If logged in, here is where the different use options are displayed.
         if (0 != strcmp($attempt,"notloggedin"))
         {
-            $retval .= "<li class='itemtab'>";
+            $retval .= "<li class='itemtab_light'>";
             $retval .= "<a href='#'>Correspondant</a>";
             $retval .= "</li>";
-            $retval .= "<li class='itemtab'>&nbsp;&nbsp;&nbsp;</li>";
-            $retval .= "<li class='itemtab'>";
+            $retval .= "<li class='itemtab_light'>&nbsp;&nbsp;&nbsp;</li>";
+            $retval .= "<li class='itemtab_light'>";
             $retval .= "<a href='#'>Editor</a>";
             $retval .= "</li>";
         }

@@ -27,7 +27,7 @@ class Blocks extends AbstractResultSet
     	{
     		$width = $this->currentBlockWidth;
     		$this->cumulativeWidth += $this->currentBlockWidth;
-    		$this->totalWidth -= $currentBlockWidth;
+    		$this->totalWidth -= $this->currentBlockWidth;
     	}
     	else
     	{
@@ -63,7 +63,7 @@ class Blocks extends AbstractResultSet
 	{
 		$this->totalWidth = $width;
 	}
-	public function getTotalWidth($width)
+	public function getTotalWidth()
 	{
 		return $this->totalWidth;
 	}

@@ -23,7 +23,9 @@ use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\DbTable as DbTableAuthAdapter;
 use Application\View\Helper\Welcome as Welcome;
 use Application\View\Helper\UserToolbar as UserToolbar;
+use Application\View\Helper\Toolbar as Toolbar;
 use Application\View\Helper\SiteToolbar as SiteToolbar;
+use Application\View\Helper\IssueToolbar as IssueToolbar;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Session\Config\SessionConfig;
@@ -119,13 +121,7 @@ class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
         $serviceManager = $e->getApplication()->getServiceManager();
 	    $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
 
-/*
-	    $userToolbar = new UserToolbar();
-		$siteToolbar = new SiteToolbar();
 
-	    $viewModel->user_toolbar = $userToolbar;
-		$viewModel->site_toolbar = $siteToolbar;
-*/
 	$this->initSession(array(
 		'remember_me_seconds' => 180,
 		'use_cookies' => true,
@@ -158,11 +154,20 @@ class Module implements AutoloaderProviderInterface, ViewHelperProviderInterface
 		            $helper = new View\Helper\Toolbar;
 		            return $helper;
 		        },
+		        'issuetoolbar' => function($sm) {
+		            $helper = new View\Helper\IssueToolbar;
+		            return $helper;
+		        },
 		        'user_toolbar' => function($sm) {
 		            $helper = new View\Helper\UserToolbar;
 			    $helper->setRenderer(new \Application\Renderer\HtmlActive());
 		            return $helper;
 		        },
+			'newbar' => function($sm) {
+				$helper = new View\Helper\Toolbar;
+				$helper->setRenderer(new \Application\Renderer\HtmlActive());
+				return $helper;
+			},
 		        'pixhelper' => function($sm) {
 		            $helper = new View\Helper\PixHelper;
 		            return $helper;

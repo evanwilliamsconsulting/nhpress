@@ -21,7 +21,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\Stdlib\ArrayObject as ArrayObject;
 
 use Application\Model\Issues as Issues;
-use Application\Entity\Wordage as Wordage;
+use Application\Entity\Issue as Issue;
 use Application\View\Helper\WordageHelper as WordageHelper;
 use Application\Service\WordageService as WordageService;
 
@@ -29,6 +29,7 @@ use Application\View\Helper\PictureHelper as PictureHelper;
 use Zend\Session\Container;
 
 use Application\View\Helper\UserToolbar as UserToolbar;
+use Application\View\Helper\Toolbar as Toolbar;
 
 class IssueController extends AbstractActionController
 {
@@ -77,8 +78,11 @@ class IssueController extends AbstractActionController
 			$username = $userSession->username;
 			$this->log->info("Logged In! Username: " . $username);
 		}
+
+		$layout->setTemplate('layout/issue');
+
 		$userToolbar = new UserToolbar();
-		$userToolbar->setUserName($username);
+		$userToolbar->setUsername($username);
 		$this->layout()->layouttest = $userToolbar->showOutput($attempt);
 
 		$log->info("Get Entity Manager");
@@ -87,34 +91,35 @@ class IssueController extends AbstractActionController
 		$log->info("Got Entity Manager");
 		
 
-	//	$new = $this->params()->fromQuery('new');
+		$new = $this->params()->fromQuery('new');
 
-	/*
+	
 		if (!is_null($new))
 		{
-			if ($new == "wordage")
+			if ($new == "issue")
 			{
-				$log->info("wordage");
+				$log->info("issue");
 				$todaysdate = date("d/m/Y",time());
 				$log->info($todaysdate);
-				$newWordage = new Wordage();
-				$newWordage->setOriginal($todaysdate);
-				$newWordage->setTitle("new");
-				$newWordage->setUsername("evanwill");
-				$newWordage->setWordage("new");
-				$newWordage->setColumnsize("65");
-				$log->info(print_r($newWordage,true));	
-				$em->persist($newWordage);
+				$newIssue = new Issue();
+				$newIssue->setDateofpublication($todaysdate);
+				$newIssue->setToggledivtagson(1);
+				$newIssue->setPriceofcopy(.25);
+				$newIssue->setTagline("A Paper Of Discussion");
+				$newIssue->setQrimage("H");
+				$newIssue->setHeadingtheme("bbb");
+				$newIssue->setSecondtheme("bbb");
+				$newIssue->setBrace("bbb");
+				$log->info(print_r($newIssue,true));	
+				$em->persist($newIssue);
 				$em->flush();
 
-				return $this->redirect()->toRoute('correspondant');
+				return $this->redirect()->toRoute('issue');
 			}
 		}
-	*/
+	
 
 			// This second layout look really should happen if logged in.
-		$layout->setTemplate('layout/issue');
-
 
 		$issues = new Issues();
 		$issues->setLog($log);
@@ -135,9 +140,11 @@ class IssueController extends AbstractActionController
 		$issueArray[] = $issueObject;
 	}
 	$view->issues = $issueArray;
-	//print_r($issueArray,true);
-	//$view->issues = $issues;
 
-        	return $view;
+	$toolbar = new Toolbar();
+	$toolbar->setUserName($username);
+	$view->toolbar = $toolbar->showOutput($attempt);
+
+	return $view;
     	}
 }

@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+ini_set('memory_limit','1024M');
 date_default_timezone_set('America/New_York');
 /**
  * This makes our life easier when dealing with paths. Everything is relative

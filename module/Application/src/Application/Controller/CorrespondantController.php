@@ -30,6 +30,7 @@ use Application\View\Helper\PictureHelper as PictureHelper;
 use Zend\Session\Container;
 
 use Application\View\Helper\UserToolbar as UserToolbar;
+use Application\View\Helper\Toolbar as Toolbar;
 
 class CorrespondantController extends AbstractActionController
 {
@@ -175,6 +176,10 @@ class CorrespondantController extends AbstractActionController
 		}		
 	}
 	$view->items = $itemArray;
+
+	$toolbar = new Toolbar();
+	$toolbar->setUserName($username);
+	$view->toolbar = $toolbar->showOutput($attempt);
 
         return $view;
 
